@@ -154,25 +154,25 @@ class FavortiesPage extends StatelessWidget{
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          for(var fav in appState.favorites)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  SizedBox(width: 10),
-                  Icon(Icons.favorite),
-                  SizedBox(width: 10), 
-                  Text(fav.asLowerCase),
-                ],
-              ),
+    if(appState.favorites.isEmpty){
+      return Center(
+        child: Text("No favorites yet!"),
+      );
+    }
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text("You have ${appState.favorites.length} favorites: "),
+          ),
+          for (var pair in appState.favorites)
+            ListTile(
+              leading: Icon(Icons.favorite),
+              title: Text(pair.asLowerCase),
             ),
-        ],
-      ),
-    );
+      ],
+    ); 
+    
   }
 }
 
